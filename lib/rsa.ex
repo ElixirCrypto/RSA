@@ -7,8 +7,17 @@ defmodule RSA do
     Enum.reduce(1..s+1, fn _, y -> y * 2 end)
   end
 
-  defp big_pow_mod(x, s, n) do
-    Enum.reduce(1..s+1, fn _, y -> y * x end) |> rem(n)
+  defp big_pow_mod_res(_, b, _, ans) when b <= 0, do: ans
+
+  defp big_pow_mod_res(a, b, c, ans) do
+    ans = if rem(b, 2) == 1, do: rem((ans * a), c), else: ans
+    b = b/2 |> trunc
+    a = a*a |> rem(c)
+    big_pow_mod_res(a, b, c, ans)
+  end
+
+  defp big_pow_mod(a, b, c) do
+    big_pow_mod_res(rem(a, c), b, c, 1)
   end
 
   defp miller_rabin(n, k, r, s) do
@@ -48,7 +57,7 @@ defmodule RSA do
   end
 
   defp prng() do
-    :crypto.rand_uniform(big_num(7), big_num(8))
+    :crypto.rand_uniform(big_num(10), big_num(11))
   end
 
   defp prng_prime() do
@@ -67,11 +76,11 @@ defmodule RSA do
   end
 
   def rng_e(l) do
-    Enum.find l..2, &(gcd(&1, l) == 1)
+    Enum.find 2..l, &(gcd(&1, l) == 1)
   end
 
   def rng_d(e, l) do
-    Enum.find l..2, &rem(e * &1, l) == 1
+    Enum.find 2..l, &rem(e * &1, l) == 1
   end
 
   def generate() do
