@@ -5,16 +5,6 @@
 ![RSA](./assets/RSA.png)
 
 ## Installation
-WIP
+work is ok!
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `rsa` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:rsa, "~> 0.1.0"}
-  ]
-end
-```
-
+now is using Rust to speed up the math functions.
