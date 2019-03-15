@@ -48,7 +48,7 @@ defmodule RSA do
   end
 
   defp prng() do
-    :crypto.rand_uniform(big_num(5), big_num(6))
+    :crypto.rand_uniform(big_num(7), big_num(8))
   end
 
   defp prng_prime() do
@@ -67,11 +67,11 @@ defmodule RSA do
   end
 
   def rng_e(l) do
-    Enum.find 2..l, &(gcd(&1, l) == 1)
+    Enum.find l..2, &(gcd(&1, l) == 1)
   end
 
   def rng_d(e, l) do
-    Enum.find 2..l, &rem(e * &1, l) == 1
+    Enum.find l..2, &rem(e * &1, l) == 1
   end
 
   def generate() do
